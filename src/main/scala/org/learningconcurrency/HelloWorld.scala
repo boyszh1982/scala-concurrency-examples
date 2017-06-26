@@ -205,3 +205,53 @@ object Test6 {
     println(s"p3.x=${p3.x},p3.y=${p3.y}")
   }
 }
+
+
+/**
+  * 第一章练习题
+  */
+
+/**
+  * 第一题，知识点，函数参数，call-by-name , 叫名函数
+  * http://blog.csdn.net/asongoficeandfire/article/details/21889375
+  */
+object CallByName {
+  var global_cnt = 100;
+  /**
+    * 使用传名调用时，在参数名称和参数类型中间有一个=》符号。
+    * @param a
+    * @param b
+    * @return
+    */
+  def addByName(a:Int,b: =>Int) = { a + global_cnt }
+  def addByName2(a:Int,b: =>Int) = {
+    b
+    a + global_cnt
+  }
+  def addByValue(a:Int,b:Int) = { a + global_cnt }
+  def func(a:Int,b:Int):Int = {
+    global_cnt = global_cnt - 10
+    return global_cnt
+  }
+  def main(args: Array[String]): Unit = {
+    //输入的func(1,2)并没有被执行过，因为在addByName中也没有被调用过
+    println( addByName(1,func(1,2) ))  //返回101
+    //输入的func(1,2)在传入addByValue前已经被调用过
+    println( addByValue(1,func(1,2) ))  //返回91
+    //在addByName2中有调用过b,即把func代码传入到addByName2后在其中被调用
+    println( addByName2(1,func(1,2) ))  //返回81
+  }
+
+}
+
+object Exercise_001 {
+  /**
+    * 题目一 def compose[A,B,C] (g:B=> C, f:A=>B):A=>C = a => ???
+    * 返回一个h函数
+    */
+
+
+  def main(args: Array[String]): Unit = {
+
+  }
+}
