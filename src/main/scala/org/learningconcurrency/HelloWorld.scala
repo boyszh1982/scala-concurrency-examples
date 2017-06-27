@@ -244,14 +244,41 @@ object CallByName {
 
 }
 
+/**
+  * 第一题，知识点，函数中返回一个函数
+  */
+object ReturnFunc {
+  // 返回一个输入为String 输出为(=>) Int 的函数
+  def returnFunc(param: String): ( String => Int ) = {
+    println(s"Hello world ! ${param}")
+    //返回函数，输入str =>(返回) str.length
+    ( str => str.length)
+  }
+
+  //输入z返回一个x = Int => Double 的函数 , 将两个数字用.连接转换为Double
+  def returnMethod(z:Int ): ( Int => Double) = {
+    //调用方法 returnMethod(2)(10) 其中 z=2 , x=10
+    x => { (x + "." + z).toDouble }
+  }
+  def main(args: Array[String]): Unit = {
+    //Dick 是 returnFunc 的参数 . Dick.length 是returnFunc返回函数的参数
+    println(returnFunc("Dick ")("Dick.length "))
+    println(returnMethod(2)(10))
+  }
+}
+
 object Exercise_001 {
   /**
     * 题目一 def compose[A,B,C] (g:B=> C, f:A=>B):A=>C = a => ???
     * 返回一个h函数
+    * _compose 输入两个函数名,返回一个函数
     */
-
-
+  def _compose[A, B, C] (g: B => C , f: A => B): ( A => C ) = x => g(f(x))
+  def funcG(a: Int): String = a + ".1"
+  def funcF(a: Double): Int = a.toInt
   def main(args: Array[String]): Unit = {
 
+    val t = _compose(funcG,funcF )(10)
+    println(t)
   }
 }
